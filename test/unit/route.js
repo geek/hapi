@@ -292,6 +292,30 @@ describe('Route', function () {
             done();
         });
 
+        it('returns true when matching a wildcard and using a request path without a trailing slash', function (done) {
+
+            var route = new Route({ path: '/{p*}', method: 'get', handler: _handler }, server);
+            var request = {
+                path: '/test',
+                method: 'get'
+            };
+
+            expect(route.match(request)).to.be.true;
+            done();
+        });
+
+        it('returns true when matching a wildcard and using a request path with a trailing slash', function (done) {
+
+            var route = new Route({ path: '/{p*}', method: 'get', handler: _handler }, server);
+            var request = {
+                path: '/test/',
+                method: 'get'
+            };
+
+            expect(route.match(request)).to.be.true;
+            done();
+        });
+
         it('returns false when called with a non-matching path', function (done) {
 
             var route = new Route({ path: '/test', method: 'get', handler: _handler }, server);
